@@ -1,9 +1,11 @@
-name: "Publish"
+name: Publish
 
 on:
   workflow_dispatch:
   push:
     branches: ["main"]
+  tags:
+    - "v*"
 
 jobs:
   publish:
@@ -12,15 +14,17 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Publish
+          username: ${{ secrets.DOCKERHUB_USERNAME }}   # = dtzsghnr
+          password: ${{ secrets.DOCKERHUB_TOKEN }}      # 你的 Docker Hub Access Token
+
+      - name: Publish (all arches via HA builder)
         uses: home-assistant/builder@master
         with:
           args: |
             --all \
             --target /data \
-            --docker-hub matt8707
+            --docker-hub dtzsghnr
