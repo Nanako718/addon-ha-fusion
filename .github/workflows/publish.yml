@@ -1,11 +1,10 @@
 name: Publish
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:            # 手动触发
   push:
-    branches: ["main"]
-  tags:
-    - "v*"
+    branches: ["main"]          # 推 main 触发
+    tags: ["v*"]                # 推符合 v* 的 tag 也触发
 
 jobs:
   publish:
@@ -14,6 +13,9 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
+
+      - name: Echo start            # 方便确认是否真的开始跑
+        run: echo "Publish workflow started"
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
