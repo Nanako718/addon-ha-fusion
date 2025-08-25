@@ -1,7 +1,7 @@
 # ha base image（由 config.yaml 的 build_from 注入）
 ARG BUILD_FROM
 
-# 你的仓库与分支/标签（确认这里的分支名与仓库一致）
+# 你的仓库与分支/标签
 ARG FUSION_REPO=https://github.com/Nanako718/ha-fusion
 ARG FUSION_REF=main
 
@@ -9,11 +9,15 @@ ARG FUSION_REF=main
 FROM node:22 AS builder
 WORKDIR /app
 
-# 安装 git 和 CA 证书（否则 git clone 很容易失败）
+# 🔧 在该 stage 再次声明 ARG，才能在下面被使用
+ARG FUSION_REPO
+ARG FUSION_REF
+
+# 安装 git 和 CA 证书（保证 clone 不报错）
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# 可视化检查变量，方便排错
+# 打印检查（方便调试时确认值）
 RUN echo "FUSION_REPO=${FUSION_REPO} FUSION_REF=${FUSION_REF}"
 
 # 拉你自己的仓库，并构建
