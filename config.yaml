@@ -1,3 +1,8 @@
+build_from:
+  aarch64: ghcr.io/home-assistant/aarch64-base:14.0.0
+  amd64: ghcr.io/home-assistant/amd64-base:14.0.0
+  armv7: ghcr.io/home-assistant/armv7-base:14.0.0
+
 name: Fusion
 version: 2025.08.25
 slug: ha_fusion
@@ -9,7 +14,6 @@ arch:
 
 init: false
 
-# 你的 Add-on 仓库主页
 url: https://github.com/Nanako718/addon-ha-fusion
 
 panel_icon: mdi:atom
@@ -25,5 +29,4 @@ hassio_api: true
 ports:
   8099/tcp: null
 
-# 使用 Docker Hub 命名空间 dtzsghnr
 image: dtzsghnr/addon-ha-fusion-{arch}
